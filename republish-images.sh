@@ -26,15 +26,15 @@
 # Early releases on JRE 8
 for i in {6..13};
 do
-    docker build -t apache/tika:"1.$i" --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless - < minimal/Dockerfile
-    docker build -t apache/tika:"1.$i"-full --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless - < full/Dockerfile
+    docker build -t flushot/tika:"1.$i" --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless - < minimal/Dockerfile
+    docker build -t flushot/tika:"1.$i"-full --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless - < full/Dockerfile
     ./docker-tool.sh test "1.$i"
     if [ $? -eq 0 ]
      then
         ./docker-tool.sh publish "1.$i"
      else
         echo "Failed to test and publish version ${1.$i}"
-        echo "$(tput setaf 1)Failed to test and publish image : apache/tika:${1.$i}$(tput sgr0)"
+        echo "$(tput setaf 1)Failed to test and publish image : flushot/tika:${1.$i}$(tput sgr0)"
         exit 1
     fi
 done;
@@ -42,15 +42,15 @@ done;
 # Signing issues on these release where public key is not available
 for i in {14..19};
 do
-    docker build -t apache/tika:"1.$i" --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless --build-arg CHECK_SIG=false - < minimal/Dockerfile
-    docker build -t apache/tika:"1.$i"-full --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless --build-arg CHECK_SIG=false - < full/Dockerfile
+    docker build -t flushot/tika:"1.$i" --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless --build-arg CHECK_SIG=false - < minimal/Dockerfile
+    docker build -t flushot/tika:"1.$i"-full --build-arg TIKA_VERSION="1.$i" --build-arg JRE=openjdk-8-jre-headless --build-arg CHECK_SIG=false - < full/Dockerfile
     ./docker-tool.sh test "1.$i"
     if [ $? -eq 0 ]
      then
         ./docker-tool.sh publish "1.$i"
      else
         echo "Failed to test and publish version ${1.$i}"
-        echo "$(tput setaf 1)Failed to test and publish image : apache/tika:${1.$i}$(tput sgr0)"
+        echo "$(tput setaf 1)Failed to test and publish image : flushot/tika:${1.$i}$(tput sgr0)"
         exit 1
     fi
 done;
@@ -65,7 +65,7 @@ do
         ./docker-tool.sh publish "1.$i"
      else
         echo "Failed to test and publish version ${1.$i}"
-        echo "$(tput setaf 1)Failed to test and publish image : apache/tika:${1.$i}$(tput sgr0)"
+        echo "$(tput setaf 1)Failed to test and publish image : flushot/tika:${1.$i}$(tput sgr0)"
         exit 1
     fi
 done;

@@ -1,6 +1,6 @@
 # tika-docker <!--- update this once we migrate to github actions(?) [![Build Status](https://api.travis-ci.com/apache/tika-docker.svg?branch=master)](https://travis-ci.com/github/apache/tika-docker) -->
 
-This repo is used to create convenience Docker images for Apache Tika Server published as [apache/tika](https://hub.docker.com/r/apache/tika) on DockerHub by the [Apache Tika](http://tika.apache.org) Dev team
+This repo is used to create convenience Docker images for Apache Tika Server published as [flushot/tika](https://hub.docker.com/r/flushot/tika) on DockerHub by the [Apache Tika](http://tika.apache.org) Dev team
 
 The images create a functional Apache Tika Server instance that contains the latest Ubuntu running the appropriate version's server on Port 9998 using Java 8 (until version 1.20), Java 11 (1.21 and 1.24.1), Java 14 (until 1.27/2.0.0), Java 16 (for 2.1.0), and Java 17 LTS for newer versions.
 
@@ -68,7 +68,7 @@ Below are the most recent 1.x series tags. **Note** that as of 30 September 2022
 - `1.28.1`: Apache Tika Server 1.28.1 (Minimal)
 - `1.28.1-full`: Apache Tika Server 1.28.1 (Full)
 
-You can see a full set of tags for historical versions [here](https://hub.docker.com/r/apache/tika/tags?page=1&ordering=last_updated).
+You can see a full set of tags for historical versions [here](https://hub.docker.com/r/flushot/tika/tags?page=1&ordering=last_updated).
 
 ## Usage
 
@@ -76,11 +76,11 @@ You can see a full set of tags for historical versions [here](https://hub.docker
 
 You can pull down the version you would like using:
 
-    docker pull apache/tika:<tag>
+    docker pull flushot/tika:<tag>
 
 Then to run the container, execute the following command:
 
-    docker run -d -p 127.0.0.1:9998:9998 apache/tika:<tag>
+    docker run -d -p 127.0.0.1:9998:9998 flushot/tika:<tag>
 
 Where <tag> is the DockerHub tag corresponding to the Apache Tika Server version - e.g. 1.23, 1.22, 1.23-full, 1.22-full.
 
@@ -90,7 +90,7 @@ NOTE: In the example above, we recommend binding the server to localhost because
 your tika-server to the internet.  If you are confident that your tika-server is on an isolated network
 you can simply run:
 
-    docker run -d -p 9998:9998 apache/tika:<tag>
+    docker run -d -p 9998:9998 flushot/tika:<tag>
 
 ### Custom Config
 
@@ -112,13 +112,13 @@ EOT
 ```
 Then by mounting this custom configuration as a volume, you could pass the command line parameter to load it
 
-    docker run -d -p 127.0.0.1:9998:9998 -v `pwd`/tika-config.xml:/tika-config.xml apache/tika:2.5.0-full --config /tika-config.xml
+    docker run -d -p 127.0.0.1:9998:9998 -v `pwd`/tika-config.xml:/tika-config.xml flushot/tika:2.5.0-full --config /tika-config.xml
 
 You can see more configuration examples [here](https://tika.apache.org/2.5.0/configuring.html).
 
 As of 2.5.0.2, if you'd like to add extra jars from your local `my-jars` directory to Tika's classpath, mount to `/tika-extras` like so:
 
-    docker run -d -p 127.0.0.1:9998:9998 -v `pwd`/my-jars:/tika-extras apache/tika:2.5.0.2-full
+    docker run -d -p 127.0.0.1:9998:9998 -v `pwd`/my-jars:/tika-extras flushot/tika:2.5.0.2-full
 
 You may want to do this to add optional components, such as the tika-eval metadata filter, or optional
 dependencies such as jai-imageio-jpeg2000 (check license compatibility first!).
@@ -144,11 +144,11 @@ You can install docker-compose from [here](https://docs.docker.com/compose/insta
 
 To build the image from scratch, simply invoke:
 
-    docker build -t 'apache/tika' github.com/apache/tika-docker
+    docker build -t 'flushot/tika' github.com/flushot/tika-docker
    
 You can then use the following command (using the name you allocated in the build command as part of -t option):
 
-    docker run -d -p 127.0.0.1:9998:9998 apache/tika
+    docker run -d -p 127.0.0.1:9998:9998 flushot/tika
     
 ## More Information
 

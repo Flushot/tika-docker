@@ -46,7 +46,7 @@ done
 
 
 test_docker_image() {
-     docker run -d --name "$1" -p 127.0.0.1:9998:9998 apache/tika:"$1"
+     docker run -d --name "$1" -p 127.0.0.1:9998:9998 flushot/tika:"$1"
      sleep 10
      url=http://localhost:9998/
      status=$(curl --head --location --connect-timeout 5 --write-out %{http_code} --silent --output /dev/null ${url})
@@ -54,9 +54,9 @@ test_docker_image() {
 
      if [[ $status == '200' ]]
      then
-      echo "$(tput setaf 2)Image: apache/tika:${1} - Basic test passed$(tput sgr0)"
+      echo "$(tput setaf 2)Image: flushot/tika:${1} - Basic test passed$(tput sgr0)"
      else
-      echo "$(tput setaf 1)Image: apache/tika:${1} - Basic test failed$(tput sgr0)"
+      echo "$(tput setaf 1)Image: flushot/tika:${1} - Basic test failed$(tput sgr0)"
       docker kill "$1"
       docker rm "$1"
       exit 1
@@ -65,11 +65,11 @@ test_docker_image() {
      #now test that the user is correctly set
      if [[ $user == '35002:35002' ]]
       then
-       echo "$(tput setaf 2)Image: apache/tika:${1} - User passed$(tput sgr0)"
+       echo "$(tput setaf 2)Image: flushot/tika:${1} - User passed$(tput sgr0)"
        docker kill "$1"
        docker rm "$1"
       else
-       echo "$(tput setaf 1)Image: apache/tika:${1} - User failed$(tput sgr0)"
+       echo "$(tput setaf 1)Image: flushot/tika:${1} - User failed$(tput sgr0)"
         docker kill "$1"
         docker rm "$1"
         exit 1
@@ -85,9 +85,9 @@ tika_version=$1; shift
 case "$subcommand" in
   build)
     # Build slim tika- with minimal dependencies
-    docker build -t apache/tika:${tika_docker_version} --build-arg TIKA_VERSION=${tika_version} - < minimal/Dockerfile --no-cache || die "couldn't build minimal"
+    docker build -t flushot/tika:${tika_docker_version} --build-arg TIKA_VERSION=${tika_version} - < minimal/Dockerfile --no-cache || die "couldn't build minimal"
     # Build full tika- with OCR, Fonts and GDAL
-    docker build -t apache/tika:${tika_docker_version}-full --build-arg TIKA_VERSION=${tika_version} - < full/Dockerfile --no-cache || die "couldn't build full"
+    docker build -t flushot/tika:${tika_docker_version}-full --build-arg TIKA_VERSION=${tika_version} - < full/Dockerfile --no-cache || die "couldn't build full"
     ;;
 
   test)
@@ -100,9 +100,9 @@ case "$subcommand" in
     docker buildx create --use --name tika-builder || die "couldn't create builder"
     # Build multi-arch with buildx and push
     docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --output "type=image,push=true" \
-      --tag apache/tika:latest --tag apache/tika:${tika_docker_version} --build-arg TIKA_VERSION=${tika_version} --no-cache --builder tika-builder minimal || stop_and_die "couldn't build multi-arch minimal"
+      --tag flushot/tika:latest --tag flushot/tika:${tika_docker_version} --build-arg TIKA_VERSION=${tika_version} --no-cache --builder tika-builder minimal || stop_and_die "couldn't build multi-arch minimal"
     docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --output "type=image,push=true" \
-      --tag apache/tika:latest-full --tag apache/tika:${tika_docker_version}-full --build-arg TIKA_VERSION=${tika_version} --no-cache --builder tika-builder full || stop_and_die "couldn't build multi-arch full"
+      --tag flushot/tika:latest-full --tag flushot/tika:${tika_docker_version}-full --build-arg TIKA_VERSION=${tika_version} --no-cache --builder tika-builder full || stop_and_die "couldn't build multi-arch full"
     docker buildx rm tika-builder || die "couldn't stop builder -- make sure to stop the builder manually! "
     ;;
 

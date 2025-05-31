@@ -18,7 +18,7 @@ services:
  
   ## Apache Tika Server 
   tika:
-    image: apache/tika:latest-full
+    image: flushot/tika:latest-full
     command: -c /tika-config.xml
     restart: on-failure
     ports:

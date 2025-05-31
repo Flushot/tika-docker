@@ -18,7 +18,7 @@ services:
  
   ## Apache Tika Server 
   tika:
-    image: apache/tika:${TAG}-full
+    image: flushot/tika:${TAG}-full
     # Override default so we can add configuration on classpath
     entrypoint: [ "/bin/sh", "-c", "exec java -cp \"/customocr:/tika-server-standard-${TIKA_VERSION}.jar:/tika-extras/*\" org.apache.tika.server.core.TikaServerCli -h 0.0.0.0 $$0 $$@"]
     # Kept command as example but could be added to entrypoint too
