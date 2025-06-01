@@ -10,3 +10,6 @@ build:
 .PHONY: release
 release:
 	./docker-tool.sh publish $(TIKA_DOCKER_VERSION) $(TIKA_VERSION)
+
+test:
+	./docker-tool.sh test $(TIKA_DOCKER_VERSION)
