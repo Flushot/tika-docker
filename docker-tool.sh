@@ -17,7 +17,7 @@
 #   specific language governing permissions and limitations
 #   under the License.
 
-image_name=apache/tika
+image_name=flushot/tika
 
 stop_and_die() {
   docker buildx rm tika-builder || die "couldn't stop builder -- make sure to stop the builder manually! "
